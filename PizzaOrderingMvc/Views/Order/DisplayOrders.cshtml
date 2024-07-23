@@ -1,6 +1,6 @@
 ﻿@{
     var Pizzas = ViewBag.Pizzas as List<PizzaOrderingMvc.Models.Pizza>;
-    var pizzaToppings = ViewBag.PizzaToppings as Dictionary<Guid, List<string>>;
+    var pizzaToppings = TempData["PizzaToppings"] as Dictionary<Guid, List<string>>;
 
 }
 @{

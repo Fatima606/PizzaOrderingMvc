@@ -15,28 +15,36 @@ namespace PizzaOrderingMvc.Controllers
         }
         public IActionResult DisplayOrders()
         {
-            _totalPizzasOrdered = 0;
-            var orders = _pizzaLoading.Pizza.Include(p => p.Size).Include(p => p._base).ToList();
-            var pizzaToppings = new Dictionary<Guid, List<string>>();
-            foreach (var order in orders)
+            try
             {
-                var toppings = _pizzaLoading.PizzaTopping
-                    .Where(to => to.PizzaId == order.PizzaId)
-                    .Select(to => to.Topping.ToppingName)
-                    .ToList();
+                _totalPizzasOrdered = 0;
+                var orders = _pizzaLoading.Pizza.Include(p => p.Size).Include(p => p._base).ToList();
+                var pizzaToppings = new Dictionary<Guid, List<string>>();
+                foreach (var order in orders)
+                {
+                    var toppings = _pizzaLoading.PizzaTopping
+                        .Where(to => to.PizzaId == order.PizzaId)
+                        .Select(to => to.Topping.ToppingName)
+                        .ToList();
 
-                pizzaToppings[order.PizzaId] = toppings;
+                    pizzaToppings[order.PizzaId] = toppings;
 
-                _totalPizzasOrdered++;
+                    _totalPizzasOrdered++;
 
+                }
+
+                ViewBag.TotalPizzasOrdered = _totalPizzasOrdered;
+                ViewBag.Pizzas = orders;
+                TempData["PizzaToppings"] = pizzaToppings;
+
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                return View("Home", "Index");
             }
 
-            ViewBag.TotalPizzasOrdered = _totalPizzasOrdered;
-            ViewBag.Pizzas = orders;
-            ViewBag.PizzaToppings = pizzaToppings;
-
-
-            return View();
         }
     }
 }
