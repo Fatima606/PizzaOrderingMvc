@@ -1,4 +1,5 @@
-﻿@{
+﻿@model PizzaOrderingMvc.Models.Pizza
+@{
     var Pizzas = ViewBag.Pizzas as List<PizzaOrderingMvc.Models.Pizza>;
     var pizzaToppings = TempData["PizzaToppings"] as Dictionary<Guid, List<string>>;
 
@@ -30,14 +31,13 @@
             <th>Pizza Base</th>
             <th>Toppings</th>
             <th>Times ordered</th>
-            <th>Edit</th>
-            <th>Confirm</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var pizza in pizzaCounts)
         {
             var pizzaDetails = pizza.Key.Split('-');
+
             <tr>
                 <td>@pizzaDetails[0]</td>
                 <td>@pizzaDetails[1]</td>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PizzaOrderingMvc.Models;
 using PizzaOrderingMvc.PizzaApp_DbContext;
 
 namespace PizzaOrderingMvc.Controllers
@@ -15,12 +16,21 @@ namespace PizzaOrderingMvc.Controllers
         {
             try
             {
-                var ConfirmedOrders = _pizzaLoading.Order
-                    .Include(c => c.Pizza)
-                    .ThenInclude(p => p.Size)
-                    .Include(c => c.Pizza)
-                    .ThenInclude(p => p._base)
-                    .ToList();
+                var ConfirmedOrders = _pizzaLoading.Pizza.Include(co => co.Size).Include(co => co._base).ToList();
+                var pizzaToppings = new Dictionary<Guid, List<string>>();
+                foreach (var order in ConfirmedOrders)
+                {
+                    var toppings = _pizzaLoading.PizzaTopping
+                        .Where(to => to.PizzaId == order.PizzaId)
+                        .Select(to => to.Topping.ToppingName)
+                        .ToList();
+
+                    pizzaToppings[order.PizzaId] = toppings;
+
+                }
+
+                TempData["PizzaToppings"] = pizzaToppings;
+
                 return View(ConfirmedOrders);
             }
             catch (Exception e)

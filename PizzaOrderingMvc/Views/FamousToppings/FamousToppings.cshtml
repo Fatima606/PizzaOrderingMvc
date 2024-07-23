@@ -1,13 +1,13 @@
-﻿@model List<PizzaOrderingMvc.Models.Order>
+﻿@model List<PizzaOrderingMvc.Models.Pizza>
 @{
     var pizzaToppings = TempData["PizzaToppings"] as Dictionary<Guid, List<string>>;
     Dictionary<string, int> toppingCounts = new Dictionary<string, int>();
     Dictionary<string, double> toppingPercentage = new Dictionary<string, double>();
     int totalOrders = Model.Count;
 
-    foreach (var customer in Model)
+    foreach (var order in Model)
     {
-        foreach (var topping in pizzaToppings[customer.PizzaId])
+        foreach (var topping in pizzaToppings[order.PizzaId])
         {
             if (toppingCounts.ContainsKey(topping))
             {
