@@ -15,41 +15,55 @@ namespace PizzaOrderingMvc.Controllers
         [HttpGet]
         public IActionResult CreatePizza()
         {
-            ViewBag.bases = _pizzaLoading.Base.ToList();
-            ViewBag.toppings = _pizzaLoading.Toppings.ToList();
-            ViewBag.sizes = _pizzaLoading.Size.ToList();
-            var pizzaDetails = new PizzaViewModel();
+            try
+            {
+                ViewBag.bases = _pizzaLoading.Base.ToList();
+                ViewBag.toppings = _pizzaLoading.Toppings.ToList();
+                ViewBag.sizes = _pizzaLoading.Size.ToList();
+                var pizzaDetails = new PizzaViewModel();
 
-            return View(pizzaDetails);
+                return View(pizzaDetails);
+            }
+            catch (Exception e)
+            {
+                return View("Home", "Index");
+            }
+            
         }
         [HttpPost]
         public IActionResult CreatePizza(PizzaViewModel model)
         {
-
-            var pizza = new Pizza
+            try
             {
-                BaseId = model.BaseId,
-                SizeId = model.SizeId
-            };
-            _pizzaLoading.Pizza.Add(pizza);
-            _pizzaLoading.SaveChanges();
-            foreach (var toppingId in model.ToppingIds)
-            {
-                var toppingsOrder = new PizzaTopping
+                var pizza = new Pizza
                 {
-                    PizzaId = pizza.PizzaId,
-                    ToppingId = toppingId
+                    BaseId = model.BaseId,
+                    SizeId = model.SizeId
                 };
-                _pizzaLoading.PizzaTopping.Add(toppingsOrder);
+                _pizzaLoading.Pizza.Add(pizza);
                 _pizzaLoading.SaveChanges();
+                foreach (var toppingId in model.ToppingIds)
+                {
+                    var toppingsOrder = new PizzaTopping
+                    {
+                        PizzaId = pizza.PizzaId,
+                        ToppingId = toppingId
+                    };
+                    _pizzaLoading.PizzaTopping.Add(toppingsOrder);
+                    _pizzaLoading.SaveChanges();
+                }
+                var order = new Order
+                {
+                    PizzaId = pizza.PizzaId
+                };
+                _pizzaLoading.Order.Add(order);
+                _pizzaLoading.SaveChanges();
+                return RedirectToAction("CreatePizza");
             }
-            var order = new Order
+            catch (Exception e)
             {
-                PizzaId = pizza.PizzaId
-            };
-            _pizzaLoading.Order.Add(order);
-            _pizzaLoading.SaveChanges();
-            return RedirectToAction("CreatePizza");
+                return View("Home", "Index");
+            }
         }
     }
 }
