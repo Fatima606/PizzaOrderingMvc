@@ -2018,11 +2018,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Fatima.zafar\\source\\repos\\demo-projects\\PizzaOrderingMvc\\PizzaOrderingMvc\\PizzaOrderingMvc.csproj",
+      "projectUniqueName": "C:\\Users\\Fatima.zafar\\Desktop\\New folder\\PizzaOrderingMvc\\PizzaOrderingMvc\\PizzaOrderingMvc.csproj",
       "projectName": "PizzaOrderingMvc",
-      "projectPath": "C:\\Users\\Fatima.zafar\\source\\repos\\demo-projects\\PizzaOrderingMvc\\PizzaOrderingMvc\\PizzaOrderingMvc.csproj",
+      "projectPath": "C:\\Users\\Fatima.zafar\\Desktop\\New folder\\PizzaOrderingMvc\\PizzaOrderingMvc\\PizzaOrderingMvc.csproj",
       "packagesPath": "C:\\Users\\Fatima.zafar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Fatima.zafar\\source\\repos\\demo-projects\\PizzaOrderingMvc\\PizzaOrderingMvc\\obj\\",
+      "outputPath": "C:\\Users\\Fatima.zafar\\Desktop\\New folder\\PizzaOrderingMvc\\PizzaOrderingMvc\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Fatima.zafar\\AppData\\Roaming\\NuGet\\NuGet.Config",
